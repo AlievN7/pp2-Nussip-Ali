@@ -1,4 +1,7 @@
-sts = input()
+import re
 
-sts = sts.split(" ")
-print(len(sts[-1]))
+txt = input()
+pattern = input()
+x = re.split(pattern, txt)
+if x:
+  print(*x, sep = ",")
