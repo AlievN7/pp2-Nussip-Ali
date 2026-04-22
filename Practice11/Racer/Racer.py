@@ -72,10 +72,28 @@ class Player(pygame.sprite.Sprite):
                 self.rect.move_ip(5, 0)
 
 
-class Coin(pygame.sprite.Sprite):
+class Coin1(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("images\coin.png")
+        self.image = pygame.image.load("images\Power1.png")
+        # масштабируем монету до нужного размера
+        self.image = pygame.transform.scale(self.image, (50, 50))
+        self.rect = self.image.get_rect()
+        self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+
+    def move(self):
+        # монета падает вниз со скоростью SPEED
+        self.rect.move_ip(0, SPEED)
+        # если вышла за экран — появляется снова сверху
+        if self.rect.top > SCREEN_HEIGHT:
+            self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+            
+
+
+class Coin2(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("images\Power2.png")
         # масштабируем монету до нужного размера
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
@@ -92,40 +110,47 @@ class Coin(pygame.sprite.Sprite):
 # Создаём спрайты
 P1 = Player()
 E1 = Enemy()
-C1 = Coin()
+C1 = Coin1()
+C2 = Coin2()
 
 # Группы спрайтов
 enemies = pygame.sprite.Group()
-coins = pygame.sprite.Group()
+coin1 = pygame.sprite.Group()
+coin2 = pygame.sprite.Group()
 enemies.add(E1)
-coins.add(C1)
+coin1.add(C1)
+coin2.add(C2)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(P1)
 all_sprites.add(E1)
 all_sprites.add(C1)
+all_sprites.add(C2)
 
 # Событие увеличения скорости каждую секунду
 INC_SPEED = pygame.USEREVENT + 1
 pygame.time.set_timer(INC_SPEED, 1000)
+
+# Для отслеживания монет по которым +скорость
+coins_speed = 0
 
 # Игровой цикл
 while True:
 
     for event in pygame.event.get():
         if event.type == INC_SPEED:
-            SPEED += 0.5
+            SPEED += 0.125
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    # Рисуем фон
+    # фон
     DISPLAYSURF.blit(background, (0, 0))
 
-    # Рисуем счёт слева
-    scores = font_small.render(str(SCORE), True, BLACK)
+    # счёт слева
+    scores = font_small.render(f"Score: {SCORE}", True, BLACK)
     DISPLAYSURF.blit(scores, (10, 10))
 
-    # Рисуем счётчик монет справа — пересоздаём каждый кадр чтобы обновлялся
+    # счётчик монет справа
     coin_text = font_small.render(f"Coins: {COINS}", True, (0, 0, 0))
     DISPLAYSURF.blit(coin_text, (SCREEN_WIDTH - 120, 10))
 
@@ -135,11 +160,23 @@ while True:
         DISPLAYSURF.blit(entity.image, entity.rect)
 
     # Проверяем столкновение игрока с монетой
-    coin_hit = pygame.sprite.spritecollideany(P1, coins)
-    if coin_hit:
+    coin_hit1 = pygame.sprite.spritecollideany(P1, coin1)
+    if coin_hit1:
         COINS += 1
         # перемещаем монету в новое место
-        coin_hit.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+        coin_hit1.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+        
+    
+    coin_hit2 = pygame.sprite.spritecollideany(P1, coin2)
+    if coin_hit2:
+        COINS += 2
+        # перемещаем монету в новое место
+        coin_hit2.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+        
+    # +скорость за каждую десятую монету
+    if (COINS % 10 == 0 or (COINS - 1) % 10 == 0) and COINS != 0 and COINS != coins_speed:
+        SPEED += 0.125
+        coins_speed += 10
 
     # Проверяем столкновение игрока с врагом
     if pygame.sprite.spritecollideany(P1, enemies):

@@ -1,5 +1,6 @@
 import pygame, sys
 import random
+import time
 
 pygame.init()
 
@@ -11,16 +12,17 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED   = (255, 0, 0)
 BLACK = (0, 0, 0)
+GRAY = (117, 124, 136)
 
 # Размеры экрана и сегмента змейки
 w = 600
 h = 400
-SEG = 10
 
 # Переменные игры
-SPEED = 10
+SPEED = 7
 SCORE = 0
 LEVEL = 1
+SEG = 20
 
 # Шрифты
 font = pygame.font.SysFont("Verdana", 60)
@@ -31,8 +33,11 @@ game_over_text = font.render("Game Over", True, BLACK)
 display = pygame.display.set_mode((w, h))
 pygame.display.set_caption("Snake")
 
-food_img = pygame.image.load("images\power.png")
-food_img = pygame.transform.scale(food_img, (SEG, SEG))
+food1_img = pygame.image.load("images\power.png")
+food1_img = pygame.transform.scale(food1_img, (SEG, SEG))
+
+food2_img = pygame.image.load(r"images\food2.png")
+food2_img = pygame.transform.scale(food2_img, (SEG, SEG))
 
 
 def spawn_food(snake):
@@ -49,9 +54,17 @@ snake = [(w//2, h//2), (w//2 - SEG, h//2), (w//2 - SEG*2, h//2)]
 Direction = "RIGHT"
 
 # Первая еда
-food_x, food_y = spawn_food(snake)
-food_rect = food_img.get_rect()
-food_rect.topleft = (food_x, food_y)
+food1_x, food1_y = spawn_food(snake)
+food1_rect = food1_img.get_rect()
+food1_rect.topleft = (food1_x, food1_y)
+
+# Bторая
+food2_x, food2_y = spawn_food(snake)
+food2_rect = food2_img.get_rect()
+food2_rect.topleft = (food2_x, food2_y)
+
+start_time = time.time()
+
 
 # Игровой цикл
 while True:
@@ -106,30 +119,47 @@ while True:
     # Добавляем новую голову
     snake.insert(0, new_head)
 
-    # Проверяем съела ли змейка еду
-    if new_head == (food_x, food_y):
+    current_time = time.time() - start_time
+    
+    if current_time >= 5:
+        food2_x, food2_y = spawn_food(snake)
+        food2_rect.topleft = (food2_x, food2_y)
+        start_time = time.time()
+    
+    # Проверяем съела ли змейка первую еду
+    if new_head == (food1_x, food1_y):
         SCORE += 1
-        # каждые 3 очка — новый уровень
+        # каждые 3 очка новый уровень
         if SCORE % 3 == 0:
             LEVEL += 1
-            SPEED += 2
-        food_x, food_y = spawn_food(snake)
-        food_rect.topleft = (food_x, food_y)
+            SPEED += 1
+        food1_x, food1_y = spawn_food(snake)
+        food1_rect.topleft = (food1_x, food1_y)
+    #проверка на вторую еду    
+    elif new_head == (food2_x, food2_y):
+        SCORE += 5
+        if SCORE % 3 == 0:
+            LEVEL += 1
+            SPEED += 1
+        food2_x, food2_y = spawn_food(snake)
+        food2_rect.topleft = (food2_x, food2_y)
+        
     else:
         # удаляем хвост
         snake.pop()
 
     
-    display.fill(BLACK)
+    display.fill(GRAY)
 
     # рисуем каждый сегмент змейки
     for segment in snake:
         pygame.draw.rect(display, GREEN, [segment[0], segment[1], SEG, SEG])
 
-    display.blit(food_img, food_rect)
+    display.blit(food1_img, food1_rect)
+    display.blit(food2_img, food2_rect)
 
     # Счёт и уровень
-    score_text = font_small.render(f"Score: {SCORE}  Level: {LEVEL}", True, WHITE)
+    score_text = font_small.render(f"Score: {SCORE}  Level: {LEVEL}", True, BLACK)
     display.blit(score_text, (10, 10))
 
     pygame.display.update()
