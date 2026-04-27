@@ -6,7 +6,7 @@ def main():
     clock = pygame.time.Clock()
 
     radius = 15
-    mode = 'draw'        # режим: draw, rect, circle, eraser
+    mode = 'draw'        # режимы: draw, rect, circle, eraser
     points = []          # временный список точек текущей линии
     start_pos = None     # начальная позиция для rect и circle
     drawings = []        # список всех нарисованных фигур
@@ -73,7 +73,7 @@ def main():
                     if len(points) >= 2:
                         drawings.append(('line', current_color, points[-2], points[-1], radius))
                 elif mode == 'eraser':
-                    # ластик — большой чёрный круг сохраняется в drawings
+                    # ластик большой чёрный круг сохраняется в drawings
                     drawings.append(('eraser', (255, 255, 255), event.pos, radius * 2))
 
             # Отпускание кнопки мыши

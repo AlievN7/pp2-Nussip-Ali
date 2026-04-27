@@ -1,0 +1,117 @@
+[
+  {
+    "username": "Ruslan",
+    "email": "ruslan.bekov@gmail.com",
+    "birthday": "1988-11-05",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "+77053456789",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Madina",
+    "email": "madina.aliyeva@gmail.com",
+    "birthday": "1992-02-18",
+    "group": "Family",
+    "phones": [
+      {
+        "phone": "+77014567890",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "username": "Timur",
+    "email": "timur.dzhaksybekov@yandex.ru",
+    "birthday": "1990-09-30",
+    "group": "Work",
+    "phones": [
+      {
+        "phone": "+77076543210",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "username": "Gulnara",
+    "email": "gulnara.satkali@mail.ru",
+    "birthday": "1985-04-15",
+    "group": "Family",
+    "phones": [
+      {
+        "phone": "+77082345678",
+        "type": "home"
+      }
+    ]
+  },
+  {
+    "username": "Arman",
+    "email": "arman.bekzhan@gmail.com",
+    "birthday": "2000-12-01",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "+77013456781",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Sabina",
+    "email": "sabina.nurlan@gmail.com",
+    "birthday": "1997-06-22",
+    "group": "Work",
+    "phones": [
+      {
+        "phone": "+77058765432",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Dias",
+    "email": "dias.omarov@yandex.ru",
+    "birthday": "1993-08-09",
+    "group": "Other",
+    "phones": [
+      {
+        "phone": "+77071234890",
+        "type": "work"
+      }
+    ]
+  },
+  {
+    "username": "Kamila",
+    "email": "kamila.zhanibek@gmail.com",
+    "birthday": "2001-01-14",
+    "group": "Family",
+    "phones": [
+      {
+        "phone": "+77029871234",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Darkhan",
+    "email": "darkhan.seitkali@gmail.com",
+    "birthday": "1995-03-12",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "+77011234567",
+        "type": "mobile"
+      }
+    ]
+  },
+  {
+    "username": "Messi",
+    "email": "messi@gmail.com",
+    "birthday": "1900-10-10",
+    "group": "Family",
+    "phones": []
+  }
+]

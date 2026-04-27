@@ -38,6 +38,7 @@ Car_colour_i = 0
 # ник чтобы отображать в таблице лидеров
 username = ""
 
+# x2 очки
 nitro_active = False
 nitro_start = 0
 
@@ -101,7 +102,7 @@ class Enemy(pygame.sprite.Sprite):
         global SCORE, nitro_active
         # двигаем врага вниз
         self.rect.move_ip(0, SPEED)
-        # если вышел за экран — возвращаем наверх и даём очко
+        # если вышел за экран то возвращаем наверх и даём очко
         if self.rect.bottom > 600:
             SCORE += 2 if nitro_active else 1
             self.rect.top = 0
@@ -144,8 +145,6 @@ class Coin1(pygame.sprite.Sprite):
         if self.rect.top > SCREEN_HEIGHT:
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
             
-
-
 class Coin2(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
